@@ -56,6 +56,13 @@
                 });
             };
 
+            $ctrl.removeItem = function (item) {
+                $ctrl.items = $ctrl.items.filter(function (it) {
+                    return it.index !== item.index;
+                });
+                $ctrl.$onChanges();
+            };
+
             function findNextAvailableSlot(colspan) {
                 var pos, row = 0;
                 while (pos === undefined) {
@@ -128,6 +135,10 @@
                     $ctrl.item.rowspan = $ctrl.rowspan;
                     $ctrl.gridCtrl.updateItem($ctrl.item);
                 }
+            };
+
+            $ctrl.$onDestroy = function () {
+                $ctrl.gridCtrl.removeItem($ctrl.item);
             };
 
             function onUpdate(item) {

@@ -174,6 +174,15 @@ describe('web-grid component', function () {
                 [undefined, undefined, 4]
             ]);
         });
+
+        it('on item remove', function () {
+            var item = items[0];
+            $ctrl.removeItem(item);
+            expect($ctrl.grid).toEqual([
+                [1, 1, 2, 4],
+                [3, 3, 5, 4]
+            ]);
+        });
     });
 
     describe('with another grid', function () {
@@ -214,7 +223,7 @@ describe('web-grid-item component', function () {
             style: {}
         }];
         $ctrl = $componentController('webGridItem', { $element: $element }, { colspan: 2, rowspan: 1 });
-        $ctrl.gridCtrl = jasmine.createSpyObj(['registerItem', 'updateItem']);
+        $ctrl.gridCtrl = jasmine.createSpyObj(['registerItem', 'updateItem', 'removeItem']);
         item = {
             index: 0
         };
@@ -246,5 +255,10 @@ describe('web-grid-item component', function () {
         expect($element[0].style['grid-column-end']).toEqual(6);
         expect($element[0].style['grid-row-start']).toEqual(4);
         expect($element[0].style['grid-row-end']).toEqual(6);
+    });
+
+    it('on destroy, remove item', function () {
+        $ctrl.$onDestroy();
+        expect($ctrl.gridCtrl.removeItem).toHaveBeenCalledWith($ctrl.item);
     });
 });
