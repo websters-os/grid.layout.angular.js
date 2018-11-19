@@ -13,8 +13,8 @@ describe('web-grid component', function () {
     }));
 
     it('apply grid styling to element', function () {
-        expect($element[0].style['-ms-grid-columns']).toEqual('(1fr)[4]');
-        expect($element[0].style['grid-template-columns']).toEqual('repeat(4, 1fr)');
+        expect($element[0].style.cssText).toEqual('display: -ms-grid; display: grid; ' +
+            '-ms-grid-columns: ' + '(1fr)[4]; grid-template-columns: repeat(4, 1fr);');
     });
 
     it('grid is empty', function () {
@@ -28,8 +28,8 @@ describe('web-grid component', function () {
         });
 
         it('update grid styling', function () {
-            expect($element[0].style['-ms-grid-columns']).toEqual('(1fr)[2]');
-            expect($element[0].style['grid-template-columns']).toEqual('repeat(2, 1fr)');
+            expect($element[0].style.cssText).toEqual('display: -ms-grid; display: grid; ' +
+            '-ms-grid-columns: ' + '(1fr)[2]; grid-template-columns: repeat(2, 1fr);');
         });
     });
 
@@ -247,6 +247,7 @@ describe('web-grid-item component', function () {
         item.colspan = 1;
         item.rowspan = 2;
         $ctrl.gridCtrl.registerItem.calls.mostRecent().args[2](item);
+        expect($element[0].style.display).toEqual('block');
         expect($element[0].style['-ms-grid-column']).toEqual(5);
         expect($element[0].style['-ms-grid-column-span']).toEqual(1);
         expect($element[0].style['-ms-grid-row']).toEqual(4);
@@ -259,6 +260,6 @@ describe('web-grid-item component', function () {
 
     it('on destroy, remove item', function () {
         $ctrl.$onDestroy();
-        expect($ctrl.gridCtrl.removeItem).toHaveBeenCalledWith($ctrl.item);
+        expect($ctrl.gridCtrl.removeItem).toHaveBeenCalledWith($ctrl.item)
     });
 });

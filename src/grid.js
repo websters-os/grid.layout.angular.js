@@ -109,8 +109,9 @@
             }
 
             function updateGridStyling() {
-                el[0].style['-ms-grid-columns'] = '(1fr)[' + totalColumns + ']';
-                el[0].style['grid-template-columns'] = 'repeat(' + totalColumns + ', 1fr)';
+                el[0].style.cssText = 'display: -ms-grid; display: grid; ' +
+                    '-ms-grid-columns: ' + '(1fr)[' + totalColumns + ']; ' +
+                    'grid-template-columns: repeat(' + totalColumns + ', 1fr);';
             }
         }];
     }
@@ -145,7 +146,8 @@
                 var style = el[0].style;
                 var column = item.column + 1;
                 var row = item.row + 1;
-
+                style.display = 'block';
+                
                 style['-ms-grid-column'] = column;
                 style['-ms-grid-column-span'] = item.colspan;
                 style['-ms-grid-row'] = row;
